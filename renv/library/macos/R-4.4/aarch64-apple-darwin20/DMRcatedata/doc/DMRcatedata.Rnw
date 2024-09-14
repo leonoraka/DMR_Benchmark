@@ -1,0 +1,73 @@
+\documentclass{article}
+\usepackage{url}
+\usepackage{breakurl}
+%\VignetteIndexEntry{The DMRcate package user's guide}
+%\VignetteEngine{knitr::knitr}
+\begin{document}
+\title{The \texttt{DMRcatedata} package user's guide}
+
+\author{Peters TJ, Buckley MJ, Statham AL, Pidsley R, Zotenko E, Clark SJ, Molloy PL}
+\maketitle
+
+\section*{Package Contents}
+
+\texttt{DMRcatedata} accompanies the \texttt{DMRcate} package, providing data for examples, probe filtering and transcript annotation.
+
+<<libr, message=FALSE, warning=FALSE>>=
+library(DMRcatedata)
+data(crosshyb)
+
+#Proximal SNPs to EPICv1 and 450K
+data(snpsall)
+
+#Proximal SNPs to EPICv2
+data(epicv2snps)
+
+data(hg19.grt)
+data(hg19.generanges)
+
+#Betas for EPICv2 
+data(ALLbetas)
+@
+
+Ten objects are contained in \texttt{DMRcatedata}. 
+\texttt{crosshyb} is a factor listing EPICv1 and 450K probe IDs potentially confounded by cross-hybridisation to other parts of the genome\cite{Pidsley}\cite{Chen}. It is used internally by \texttt{rmSNPandCH()}.
+
+
+\texttt{snpsall} is a data.frame containing probes from 450K and EPICv1 that are potentially confounded by a SNP or indel variant\cite{Pidsley}. It lists the ID, distance (in nucleotides) to the CpG in question, and minor allele frequency for each associated variant. \texttt{epicv2snps} contains the same but for the EPICv2 array.
+
+
+\texttt{XY.probes} is a vector of EPICv1 and 450K Illumina probes whose targets are on human sex chromosomes.
+
+
+Objects named \texttt{.*\.(grt|generanges)} are annotation objects that are needed by \texttt{extractRanges()} and \texttt{DMR.plot()} respectively. hg38 and mm10 objects have been parsed from Release 96 of Ensembl, and hg19 from Release 75. These are accessed within the environment of the aforementioned functions.
+
+\texttt{ALLbetas} is a matrix of EPICv2 beta values from Noguera-Castells et al. (2023)\cite{Noguera} consisting of five B cell acute lymphoblastic leukaemia (BALL) and five T cell acute lymphoblastic leukaemia (TALL) samples for DMR calling.
+
+\section*{Sources}
+\begin{itemize}
+  \item \texttt{snpsall} sourced from \url{https://static-content.springer.com/esm/art\%3A10.1186\%2Fs13059-016-1066-1/MediaObjects/13059_2016_1066_MOESM4_ESM.csv}, \url{https://static-content.springer.com/esm/art\%3A10.1186\%2Fs13059-016-1066-1/MediaObjects/13059_2016_1066_MOESM5_ESM.csv}, \url{https://static-content.springer.com/esm/art\%3A10.1186\%2Fs13059-016-1066-1/MediaObjects/13059_2016_1066_MOESM6_ESM.csv}, \url{http://www.sickkids.ca/MS-Office-Files/Research/Weksberg Lab/48640-polymorphic-CpGs-Illumina450k.xlsx} (accessed October 2016) 
+  \item \texttt{crosshyb} sourced from \url{https://static-content.springer.com/esm/art\%3A10.1186\%2Fs13059-016-1066-1/MediaObjects/13059_2016_1066_MOESM2_ESM.csv}, \url{https://static-content.springer.com/esm/art\%3A10.1186\%2Fs13059-016-1066-1/MediaObjects/13059_2016_1066_MOESM3_ESM.csv} (accessed October 2016) and \url{http://www.sickkids.ca/MS-Office-Files/Research/Weksberg Lab/48639-non-specific-probes-Illumina450k.xlsx}, (accessed February 2014). 
+  \item {ALLbetas} sourced from \url{https://ftp.ncbi.nlm.nih.gov/geo/series/GSE222nnn/GSE222919/suppl/GSE222919_processed_data.txt.gz}, (accessed February 2024).
+  \item {epicv2snps} sourced from \url{https://static-content.springer.com/esm/art\%3A10.1186\%2Fs12864-024-10027-5/MediaObjects/12864_2024_10027_MOESM4_ESM.csv} (Accessed March 2024). 
+\end{itemize}
+
+\begin{thebibliography}{9}
+
+\bibitem{Pidsley}
+  Pidsley R, Zotenko E, Peters TJ, Lawrence MG, Risbridger GP, Molloy P, 
+  Van Dijk S, Muhlhausler B, Stirzaker C, Clark SJ. Critical evaluation of 
+  the Illumina MethylationEPIC BeadChip microarray for whole-genome DNA 
+  methylation profiling. \emph{Genome Biology}. 2016 17(1), 208.
+
+\bibitem{Chen}
+  Chen YA, Lemire M, Choufani S, Butcher DT, Grafodatskaya D, Zanke BW, Gallinger S, Hudson TJ, Weksberg R. 
+  Discovery of cross-reactive probes and polymorphic CpGs in the Illumina Infinium HumanMethylation450 microarray. 
+  \emph{Epigenetics}. 2013 Jan 11;8(2).
+
+\bibitem{Noguera}
+  Noguera-Castells A, Garcia-Prieto CA, Alvarez-Errico D, Esteller M. Validation of the new EPIC DNA methylation microarray (900K EPIC v2) for high-throughput profiling of the human DNA methylome. \emph{Epigenetics} 2023 Dec;18(1):2185742.
+  
+\end{thebibliography}
+
+\end{document}

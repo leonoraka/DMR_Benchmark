@@ -1,0 +1,58 @@
+    def find_overlaps(self, testtab, sim):
+        # Rename columns
+        # testtab
+        filtered = pd.DataFrame()
+        #print(testtab.head)
+        # Iterate over each row in the testtab DataFrame with a progress bar
+        for r in tqdm(range(len(testtab))):
+            #print(r)
+            row = testtab.iloc[r]
+            chromosome = row['chr']
+            x = row['start'] #TODO: big integer?
+            y = row['end'] #TODO: big integer?
+
+            # Filter simtab to only rows with the same chromosome
+            sim_filt = sim[sim['chr'] == chromosome]
+            #print(row)
+            for s in range(len(sim_filt)):
+                sim_row = sim_filt.iloc[s]
+                S_start = sim_row['start']
+                S_end = sim_row['end']
+
+                # Check for overlap
+                overlap = 0
+                if ((S_start <= x and y <= S_end) or
+                        (S_start <= x and x < S_end and S_end <= y) or
+                        (x <= S_start and S_end <= y) or
+                        (x <= S_start and y <= S_end and S_start < y)):
+                    #print("found an overlap")
+                    # Calculate overlap
+                    if S_start <= x and y <= S_end:
+                        overlap = y - x
+                    elif S_start <= x and x < S_end and S_end <= y:
+                        overlap = S_end - x
+                    elif x <= S_start and S_end <= y:
+                        overlap = S_end - S_start
+                    elif x <= S_start and y <= S_end and S_start < y:
+                        overlap = y - S_start
+
+                    current_row = row.copy()
+                    current_row['overlap'] = overlap
+                    current_row['sim_chr'] = chromosome
+                    current_row['sim_start'] = S_start
+                    current_row['sim_end'] = S_end
+                    current_row['sim_width'] = S_end - S_start
+
+                    filtered = pd.concat([filtered, current_row.to_frame().T], ignore_index=True)
+            #break
+
+        # Adjust filtered columns
+        #filtered['width'] = filtered['end'] - filtered['start']
+        filtered['fraction_overlap'] = filtered['overlap'] / filtered['sim_width']
+
+        # Identify rows with no overlap
+        no_overlap = pd.merge(testtab, filtered[['chr', 'start', 'end']], on=['chr', 'start', 'end'],
+                              how='outer', indicator=True)
+        no_overlap = no_overlap[no_overlap['_merge'] == 'left_only'].drop(columns=['_merge'])
+
+        return {'TP': filtered, 'FP': no_overlap}

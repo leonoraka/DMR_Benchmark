@@ -1,0 +1,10 @@
+CHANGES IN DMRcatedata VERSION 2.20.2
+- EPICv2 data added for vignette
+
+CHANGES IN DMRcatedata VERSION 2.20.1
+- SNP data added for EPICv2
+
+CHANGES IN DMRcatedata VERSION 2.0.0
+- Data package now uses ExperimentHub
+- Objects myBetas, CpGs, tx.hg19, tx.hg38 and tx.mm10 have been retired
+- Objects hg19.generanges, hg19.grt, hg38.generanges, hg38.grt, mm10.generanges and mm10.grt have been added as annotation for extractRanges() and DMR.plot()

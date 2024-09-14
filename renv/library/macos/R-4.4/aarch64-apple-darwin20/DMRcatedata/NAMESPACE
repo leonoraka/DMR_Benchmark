@@ -1,0 +1,8 @@
+exportPattern("^[[:alpha:]]+")
+import(GenomicFeatures)
+import(Gviz)
+import(readxl)
+import(plyr)
+import(rtracklayer)
+import(IlluminaHumanMethylation450kanno.ilmn12.hg19)
+import(IlluminaHumanMethylationEPICanno.ilm10b4.hg19)

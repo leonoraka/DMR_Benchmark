@@ -1,0 +1,13 @@
+ALLbetas                EPICv2 beta values for DMR calling
+DMRcatedata-package     Dataset to use with the DMRcate pipeline
+XY.probes               Sex chromosome Illumina probes
+crosshyb                Potentially cross-hybridising Illumina probes
+epicv2snps              SNP information for EPICv2 Illumina probes
+hg19.generanges         Start and stop positions of all genes in hg19
+hg19.grt                GeneRegionTrack for hg19
+hg38.generanges         Start and stop positions of all genes in hg38
+hg38.grt                GeneRegionTrack for hg38
+mm10.generanges         Start and stop positions of all genes in mm10
+mm10.grt                GeneRegionTrack for mm10
+snpsall                 SNP information for EPICv1 and 450K Illumina
+                        probes
